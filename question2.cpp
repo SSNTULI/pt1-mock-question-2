@@ -19,16 +19,103 @@ using namespace std;
 
 
 // ***** DO NOT MODIFY CODE BELOW THIS LINE *****
+
+class Time{
+private:
+	int hours;
+	int mins;
+
+public:
+	Time();
+	Time(int, int);
+	void set(int h, int m);
+	void get(int h, int m);
+	~Time();
+	friend ostream &operator<<(ostream &outout, Time &t);
+	Time operator++(int);
+
+};
+Time::Time()
+{
+	hours = 0;
+	mins = 0;
+
+}
+
+
+Time::Time(int hr, int min)
+{
+	
+	hours = hr;
+	mins = min;
+}
+
+void Time::get(int h, int m){
+	set(h, m);
+	hours = h;
+	mins = m;
+}
+
+void Time::set(int h, int m){
+
+	if (h > 0 && h <= 23) {
+		hours = h;
+
+	}
+	else{
+		hours = 0;
+	}
+
+	if (m > 0 && m <= 59) {
+		mins = m;
+
+	}
+	else{
+		mins = 0;
+	}
+	hours = h;
+	mins = m;
+
+}
+Time Time ::operator++(int h)
+{
+	// save the orignal value
+	Time T(hours, mins);
+	// increment this object
+	++mins;
+	if (mins >= 60)
+	{
+		++hours;
+		mins -= 60;
+	}
+	// return old original value
+	return T;
+}
+Time::~Time()
+{
+
+}
+
+
+ostream &operator<<(ostream &output, Time &t){
+	output << t.hours << ":" << t.mins << endl;
+	return output;
+}
+
+
 int main(int argc, char *argv[]) {
 
-	Time myTime(8, 40);									// instantiate time class 
-
+	Time myTime(8, 40);			
+	int hour, me;		// instantiate time class 
+	myTime++;
 	cout << "CM3 starts at " << myTime << endl;			// demonstrate overloaded stream insertion operator
+	hour=10;
+	me = 30;
+	myTime.set(hour, me);									// change the time
+	
+						                           // get changed time
 
-	myTime.set(10, 30);									// change the time
-
-	int hours, mins;									// get changed time
-	myTime.get(hours, mins);
-	cout << "Design 1 starts at " << mins << " past " << hours;   // display time in another format
+	myTime.get(hour, me);
+	cout << "Design 1 starts at " << me << " past " << hour << endl;   // display time in another format
 
 }
